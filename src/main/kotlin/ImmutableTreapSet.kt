@@ -1,4 +1,4 @@
-import kotlin.random.Random
+import java.util.concurrent.ThreadLocalRandom
 
 fun<K> immutableTreapSet(comparator: Comparator<K>) = ImmutableTreapSet(comparator)
 fun<K : Comparable<K>> immutableTreapSet() = ImmutableTreapSet(naturalOrder<K>())
@@ -73,7 +73,10 @@ class ImmutableTreapSet<K> private constructor(
     fun add(element: K): ImmutableTreapSet<K> {
         val (l, v, r) = rootNode.splitAt(element)
         return if (v != null) this
-        else ImmutableTreapSet(l mergeWith Node(element, null, null, Random.nextLong()) mergeWith r, comparator)
+        else {
+            val newNode = Node(element, null, null, ThreadLocalRandom.current().nextLong())
+            ImmutableTreapSet(l mergeWith newNode mergeWith r, comparator)
+        }
     }
 
     fun addAll(other: ImmutableTreapSet<K>): ImmutableTreapSet<K> = when {

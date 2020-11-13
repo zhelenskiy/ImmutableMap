@@ -7,7 +7,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.toDuration
 
-class MergeTests {
+class SetTests {
     @ExperimentalTime
     @Test
     fun validData() {
@@ -34,7 +34,7 @@ class MergeTests {
                     val data2 = Array(size2) { Random.nextInt(100) }.toList()
                     val set1 = immutableTreapSet(data1)
                     val set2 = immutableTreapSet(data2)
-                    val epsilon = 100.toDuration(TimeUnit.MICROSECONDS)
+                    val epsilon = 300.toDuration(TimeUnit.MICROSECONDS)
 
                     val (naiveValue, naiveDuration) = measureTimedValue { immutableTreapSet(data1 + data2) }
                     val (customValue, customDuration) = measureTimedValue { set1 + set2 }
